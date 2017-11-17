@@ -336,6 +336,16 @@ func (d *Decoder) ResetState() {
 	C.gopus_decoder_resetstate(d.cDecoder)
 }
 
+func GetSamplesPerFrame(data []byte, samplingRate int) (int, error) {
+	dataPtr := (*C.uchar)(unsafe.Pointer(&data[0]))
+	cSamplingRate := C.opus_int32(samplingRate)
+	cRet := C.opus_packet_get_samples_per_frame(dataPtr, cSamplingRate)
+	/*if err := getErr(cRet); err != nil {
+	        return 0, err
+	}*/
+	return int(cRet), nil
+}
+
 func CountFrames(data []byte) (int, error) {
 	dataPtr := (*C.uchar)(unsafe.Pointer(&data[0]))
 	cLen := C.opus_int32(len(data))
