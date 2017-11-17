@@ -1,6 +1,6 @@
 // +build !amd64,!386,cgo
 
-package gopus // import "layeh.com/gopus"
+package gopus // import "github.com/dchote/gopus"
 
 // #cgo !nopkgconfig pkg-config: opus
 //
@@ -185,6 +185,16 @@ func (d *Decoder) Decode(data []byte, frameSize int, fec bool) ([]int16, error) 
 
 func (d *Decoder) ResetState() {
 	C.gopus_decoder_resetstate(d.cDecoder)
+}
+
+func GetSamplesPerFrame(data []byte, samplingRate int) (int, error) {
+	dataPtr := (*C.uchar)(unsafe.Pointer(&data[0]))
+	cSamplingRate := C.opus_int32(samplingRate)
+	cRet := C.opus_packet_get_samples_per_frame(dataPtr, cSamplingRate)
+	/*if err := getErr(cRet); err != nil {
+	        return 0, err
+	}*/
+	return int(cRet), nil
 }
 
 func CountFrames(data []byte) (int, error) {
