@@ -1,6 +1,6 @@
 // +build amd64,cgo 386,cgo
 
-package gopus // import "github.com/dchote/gopus"
+package gopus // import "github.com/triwav/gopus"
 
 // #cgo linux darwin freebsd LDFLAGS: -lm
 //

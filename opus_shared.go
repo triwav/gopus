@@ -1,6 +1,6 @@
 // +build !amd64,!386,cgo
 
-package gopus // import "github.com/dchote/gopus"
+package gopus // import "github.com/triwav/gopus"
 
 // #cgo !nopkgconfig pkg-config: opus
 //
